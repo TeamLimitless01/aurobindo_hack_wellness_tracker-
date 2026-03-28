@@ -2,7 +2,7 @@
 
 A modern, mobile-first **Wellness Tracker Application** designed to help you manage daily habits, track fitness goals, and visualize health trends. This application provides a high-performance, dark-themed experience that works entirely offline using `LocalStorage`, ensuring your data stays private and accessible anytime.
 
-![Project Preview](https://via.placeholder.com/800x400.png?text=Wellness+Tracker+Preview) *(Replace with actual screenshot if available)*
+![Project Preview](https://aurobindo-hack-wellness-tracker.vercel.app/)
 
 ---
 
@@ -62,7 +62,7 @@ Follow these steps to set up the project locally:
 ### Setup Steps
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/TeamLimitless01/aurobindo_hack_wellness_tracker-.git
    cd wellness
    ```
 
