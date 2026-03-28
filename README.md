@@ -2,7 +2,7 @@
 
 A modern, mobile-first **Wellness Tracker Application** designed to help you manage daily habits, track fitness goals, and visualize health trends. This application provides a high-performance, dark-themed experience that works entirely offline using `LocalStorage`, ensuring your data stays private and accessible anytime.
 
-![Project Preview](/public/image.png?raw=true&height=400&width=800)
+![Wellness Tracker App](/public/image.png?raw=true&height=400&width=800)
 
 ---
 
