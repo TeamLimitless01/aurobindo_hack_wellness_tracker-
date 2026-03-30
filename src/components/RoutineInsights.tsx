@@ -122,7 +122,7 @@ const RoutineInsights: React.FC = () => {
           <div className="text-sm text-gray-600 dark:text-gray-400">Active Days</div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+    {/*     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between mb-2">
             <Award className="text-purple-500" size={20} />
             <span className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -130,7 +130,7 @@ const RoutineInsights: React.FC = () => {
             </span>
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400">Current Streak</div>
-        </div>
+        </div> */}
 
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between mb-2">
@@ -233,12 +233,12 @@ const RoutineInsights: React.FC = () => {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Streak Information</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="text-center">
+      {/*     <div className="text-center">
             <div className="text-2xl font-bold text-green-600 dark:text-green-400">
               {insights.streakData.currentStreak}
             </div>
             <div className="text-sm text-gray-500 dark:text-gray-400">Current Streak</div>
-          </div>
+          </div> */}
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
               {insights.streakData.longestStreak}
