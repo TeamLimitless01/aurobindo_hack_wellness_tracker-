@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Navigation } from "@/components/Navigation";
+import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +18,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Wellness Tracker",
   description: "Track daily health habits and improve lifestyle",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Wellness",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#14b8a6",
 };
 
 export default function RootLayout({
@@ -31,6 +42,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen text-slate-100 bg-slate-950">
         <Providers>
+          <ServiceWorkerRegistration />
           <Navigation />
           <main className="flex-1 min-h-screen pb-24 md:pb-8 md:pl-64 w-full">
             {children}
