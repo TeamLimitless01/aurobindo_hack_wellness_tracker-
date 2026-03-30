@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, LineChart, Settings } from "lucide-react";
+import { Home, LineChart, Settings, Calendar } from "lucide-react";
 import clsx from "clsx";
 
 const NAV_ITEMS = [
   { href: "/", label: "Dashboard", Icon: Home },
+  { href: "/routine", label: "Routine", Icon: Calendar },
   { href: "/trends", label: "Insights", Icon: LineChart },
   { href: "/settings", label: "Settings", Icon: Settings },
 ];
