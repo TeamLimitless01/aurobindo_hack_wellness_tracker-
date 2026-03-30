@@ -1,20 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
-import { Calendar, Settings, ListTodo } from "lucide-react";
+import { Calendar, Settings, BarChart3, ListTodo } from "lucide-react";
 import RoutineSetup from "@/components/RoutineSetup";
 import MonthlyRoutineTable from "@/components/MonthlyRoutineTable";
 import DailyRoutineTracker from "@/components/DailyRoutineTracker";
+import RoutineInsights from "@/components/RoutineInsights";
 import { DayOfWeek } from "@/types";
 
 const RoutinePage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'setup' | 'monthly' | 'daily'>('monthly');
+  const [activeTab, setActiveTab] = useState<'setup' | 'monthly' | 'daily' | 'insights'>('monthly');
   const [selectedDay, setSelectedDay] = useState<DayOfWeek>('monday');
 
   const tabs = [
     { id: 'monthly' as const, label: 'Monthly View', icon: Calendar },
     { id: 'daily' as const, label: 'Daily Tracker', icon: ListTodo },
     { id: 'setup' as const, label: 'Setup Routine', icon: Settings },
+    { id: 'insights' as const, label: 'Insights', icon: BarChart3 },
   ];
 
   const daysOfWeek: DayOfWeek[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
@@ -93,6 +95,10 @@ const RoutinePage: React.FC = () => {
               {/* Routine setup for selected day */}
               <RoutineSetup day={selectedDay} />
             </div>
+          )}
+
+          {activeTab === 'insights' && (
+            <RoutineInsights />
           )}
         </div>
       </div>
