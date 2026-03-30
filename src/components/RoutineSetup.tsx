@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Plus, Clock, Edit2, Trash2, X } from "lucide-react";
+import { Plus, Clock, Edit2, Trash2, X, Copy } from "lucide-react";
 import { RoutineItem, DayOfWeek, getCategoryColor, calculateDuration, formatTimeRange } from "@/types";
 import { useRoutineData } from "@/context/RoutineContext";
 
@@ -14,11 +14,13 @@ const RoutineSetup: React.FC<RoutineSetupProps> = ({ day }) => {
     getRoutineForDay, 
     addRoutineItem, 
     updateRoutineItem, 
-    deleteRoutineItem 
+    deleteRoutineItem,
+    copyRoutineFromDay
   } = useRoutineData();
   
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [editingItem, setEditingItem] = useState<RoutineItem | null>(null);
+  const [showCopyOptions, setShowCopyOptions] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -30,6 +32,9 @@ const RoutineSetup: React.FC<RoutineSetupProps> = ({ day }) => {
 
   const routineItems = getRoutineForDay(day);
   const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+  
+  const daysOfWeek: DayOfWeek[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  const otherDays = daysOfWeek.filter(d => d !== day);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,14 +88,25 @@ const RoutineSetup: React.FC<RoutineSetupProps> = ({ day }) => {
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">{dayLabel}</h3>
         {!isAddingItem && (
-          <button
-            onClick={() => setIsAddingItem(true)}
-            className="flex items-center gap-2 px-2 py-1.5 sm:px-3 sm:py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-xs sm:text-sm"
-          >
-            <Plus size={14} className="sm:size-16" />
-            <span className="hidden sm:inline">Add Item</span>
-            <span className="sm:hidden">Add</span>
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setIsAddingItem(true)}
+              className="flex items-center gap-2 px-2 py-1.5 sm:px-3 sm:py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-xs sm:text-sm"
+            >
+              <Plus size={14} className="sm:size-16" />
+              <span className="hidden sm:inline">Add Item</span>
+              <span className="sm:hidden">Add</span>
+            </button>
+            
+            <button
+              onClick={() => setShowCopyOptions(!showCopyOptions)}
+              className="flex items-center gap-2 px-2 py-1.5 sm:px-3 sm:py-1.5 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-xs sm:text-sm"
+            >
+              <Copy size={14} className="sm:size-16" />
+              <span className="hidden sm:inline">Copy</span>
+              <span className="sm:hidden">Copy</span>
+            </button>
+          </div>
         )}
       </div>
 
@@ -217,10 +233,53 @@ const RoutineSetup: React.FC<RoutineSetupProps> = ({ day }) => {
         </form>
       )}
 
+      {/* Copy Options */}
+      {showCopyOptions && (
+        <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700">
+          <h4 className="text-sm font-semibold text-green-800 dark:text-green-200 mb-3">
+            Copy routine from another day
+          </h4>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {otherDays.map((sourceDay) => {
+              const sourceRoutine = getRoutineForDay(sourceDay);
+              const hasItems = sourceRoutine.length > 0;
+              
+              return (
+                <button
+                  key={sourceDay}
+                  onClick={() => {
+                    if (hasItems) {
+                      copyRoutineFromDay(sourceDay, day);
+                      setShowCopyOptions(false);
+                    }
+                  }}
+                  disabled={!hasItems}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    hasItems
+                      ? "bg-green-500 text-white hover:bg-green-600"
+                      : "bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-600 dark:text-gray-500"
+                  }`}
+                >
+                  {sourceDay.charAt(0).toUpperCase() + sourceDay.slice(1)}
+                  {hasItems && (
+                    <span className="block text-xs opacity-75">
+                      {sourceRoutine.length} items
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          <p className="text-xs text-green-600 dark:text-green-400 mt-2">
+            This will replace all existing routine items for {dayLabel}
+          </p>
+        </div>
+      )}
+
       <div className="space-y-2 sm:space-y-3">
         {routineItems.length === 0 && !isAddingItem && (
           <p className="text-gray-500 dark:text-gray-400 text-center py-6 sm:py-8 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-sm sm:text-base">
-            No routine items for {dayLabel}. Click "Add Item" to get started.
+            No routine items for {dayLabel}. Click "Add Item" or "Copy" from another day to get started.
           </p>
         )}
         

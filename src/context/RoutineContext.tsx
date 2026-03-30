@@ -25,6 +25,7 @@ interface RoutineContextType {
   deleteRoutineItem: (day: DayOfWeek, itemId: string) => void;
   getRoutineForDay: (day: DayOfWeek) => RoutineItem[];
   getRoutineForDate: (date: Date) => RoutineItem[];
+  copyRoutineFromDay: (fromDay: DayOfWeek, toDay: DayOfWeek) => void;
   
   // Completion tracking
   toggleRoutineCompletion: (date: Date, itemId: string) => void;
@@ -129,6 +130,26 @@ export const RoutineProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const getRoutineForDate = (date: Date): RoutineItem[] => {
     const dayOfWeek = getDayOfWeek(date);
     return getRoutineForDay(dayOfWeek);
+  };
+
+  const copyRoutineFromDay = (fromDay: DayOfWeek, toDay: DayOfWeek) => {
+    if (!routineData) return;
+    
+    const sourceRoutine = routineData.weeklyRoutine[fromDay];
+    const copiedItems: RoutineItem[] = sourceRoutine.map(item => ({
+      ...item,
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    }));
+    
+    const newData = {
+      ...routineData,
+      weeklyRoutine: {
+        ...routineData.weeklyRoutine,
+        [toDay]: copiedItems.sort((a, b) => a.time.localeCompare(b.time)),
+      },
+    };
+    
+    saveToStorage(newData);
   };
 
   // Completion tracking
@@ -266,6 +287,7 @@ export const RoutineProvider: React.FC<{ children: React.ReactNode }> = ({ child
     deleteRoutineItem,
     getRoutineForDay,
     getRoutineForDate,
+    copyRoutineFromDay,
     toggleRoutineCompletion,
     skipRoutineItem,
     unskipRoutineItem,
