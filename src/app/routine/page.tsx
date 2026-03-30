@@ -5,6 +5,7 @@ import { Calendar, Settings, BarChart3, ListTodo } from "lucide-react";
 import RoutineSetup from "@/components/RoutineSetup";
 import MonthlyRoutineTable from "@/components/MonthlyRoutineTable";
 import DailyRoutineTracker from "@/components/DailyRoutineTracker";
+import RoutineInsights from "@/components/RoutineInsights";
 import { DayOfWeek } from "@/types";
 
 const RoutinePage: React.FC = () => {
@@ -96,18 +97,7 @@ const RoutinePage: React.FC = () => {
             </div>
           )}
 
-          {activeTab === 'insights' && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 dark:text-white">Routine Insights</h2>
-              <div className="text-center py-8">
-                <BarChart3 size={40} className="mx-auto text-gray-300 mb-4" />
-                <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2 dark:text-white">Coming Soon</h3>
-                <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
-                  Detailed analytics and insights about your routine performance will be available here.
-                </p>
-              </div>
-            </div>
-          )}
+          {activeTab === 'insights' && <RoutineInsights />}
         </div>
       </div>
     </div>
