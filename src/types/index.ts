@@ -128,3 +128,14 @@ export const formatTimeRange = (startTime: string, endTime?: string): string => 
   if (!endTime) return startTime;
   return `${startTime} to ${endTime}`;
 };
+
+export const sortRoutineItemsByTime = (items: RoutineItem[]): RoutineItem[] => {
+  return items.sort((a, b) => {
+    // Convert time strings to minutes for proper sorting
+    const [aHour, aMin] = a.time.split(':').map(Number);
+    const [bHour, bMin] = b.time.split(':').map(Number);
+    const aMinutes = aHour * 60 + aMin;
+    const bMinutes = bHour * 60 + bMin;
+    return aMinutes - bMinutes;
+  });
+};

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, Calendar, Check, X, SkipForward } from "lucide-react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths } from "date-fns";
 import { useRoutineData } from "@/context/RoutineContext";
-import { getCategoryColor, formatTimeRange } from "@/types";
+import { getCategoryColor, formatTimeRange, sortRoutineItemsByTime } from "@/types";
 
 interface MonthlyRoutineTableProps {
   onDateSelect?: (date: Date) => void;
@@ -173,7 +173,7 @@ const MonthlyRoutineTable: React.FC<MonthlyRoutineTableProps> = ({ onDateSelect 
                 
                 {/* Routine items preview */}
                 <div className="space-y-0.5 sm:space-y-1">
-                  {routine.slice(0, isExpanded ? routine.length : 1).map(item => (
+                  {sortRoutineItemsByTime(routine).slice(0, isExpanded ? routine.length : 1).map(item => (
                     <div
                       key={item.id}
                       className={`text-xs p-0.5 sm:p-1 rounded truncate ${getCategoryColor(item.category)}`}

@@ -4,7 +4,7 @@ import React from "react";
 import { Check, X, SkipForward, Clock, RotateCcw } from "lucide-react";
 import { format } from "date-fns";
 import { useRoutineData } from "@/context/RoutineContext";
-import { getCategoryColor, formatTimeRange } from "@/types";
+import { getCategoryColor, formatTimeRange, sortRoutineItemsByTime } from "@/types";
 
 interface DailyRoutineTrackerProps {
   date?: Date;
@@ -137,7 +137,7 @@ const DailyRoutineTracker: React.FC<DailyRoutineTrackerProps> = ({ date }) => {
           </div>
         ) : (
           <div className="space-y-2 sm:space-y-3">
-            {routine.map((item) => {
+            {sortRoutineItemsByTime(routine).map((item) => {
               const status = getItemStatus(item.id);
               
               return (

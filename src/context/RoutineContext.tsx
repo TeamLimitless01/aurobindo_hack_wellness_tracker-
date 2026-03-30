@@ -9,7 +9,8 @@ import {
   DayOfWeek, 
   getEmptyRoutineData, 
   getEmptyRoutineCompletion,
-  getDayOfWeek 
+  getDayOfWeek,
+  sortRoutineItemsByTime
 } from "@/types";
 
 interface RoutineContextType {
@@ -86,7 +87,7 @@ export const RoutineProvider: React.FC<{ children: React.ReactNode }> = ({ child
       ...routineData,
       weeklyRoutine: {
         ...routineData.weeklyRoutine,
-        [day]: [...routineData.weeklyRoutine[day], newItem].sort((a, b) => a.time.localeCompare(b.time)),
+        [day]: sortRoutineItemsByTime([...routineData.weeklyRoutine[day], newItem]),
       },
     };
     
@@ -100,9 +101,9 @@ export const RoutineProvider: React.FC<{ children: React.ReactNode }> = ({ child
       ...routineData,
       weeklyRoutine: {
         ...routineData.weeklyRoutine,
-        [day]: routineData.weeklyRoutine[day].map(item => 
+        [day]: sortRoutineItemsByTime(routineData.weeklyRoutine[day].map(item => 
           item.id === itemId ? { ...item, ...updates } : item
-        ).sort((a, b) => a.time.localeCompare(b.time)),
+        )),
       },
     };
     
@@ -124,7 +125,8 @@ export const RoutineProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   const getRoutineForDay = (day: DayOfWeek): RoutineItem[] => {
-    return routineData?.weeklyRoutine[day] || [];
+    if (!routineData) return [];
+    return sortRoutineItemsByTime(routineData.weeklyRoutine[day] || []);
   };
 
   const getRoutineForDate = (date: Date): RoutineItem[] => {
@@ -145,7 +147,7 @@ export const RoutineProvider: React.FC<{ children: React.ReactNode }> = ({ child
       ...routineData,
       weeklyRoutine: {
         ...routineData.weeklyRoutine,
-        [toDay]: copiedItems.sort((a, b) => a.time.localeCompare(b.time)),
+        [toDay]: sortRoutineItemsByTime(copiedItems),
       },
     };
     
