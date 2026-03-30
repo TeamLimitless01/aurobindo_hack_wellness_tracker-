@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { Plus, Clock, Edit2, Trash2, X, Copy } from "lucide-react";
 import { RoutineItem, DayOfWeek, getCategoryColor, calculateDuration, formatTimeRange } from "@/types";
 import { useRoutineData } from "@/context/RoutineContext";
-import NotificationSettings from "@/components/NotificationSettings";
 
 interface RoutineSetupProps {
   day: DayOfWeek;
@@ -321,17 +320,6 @@ const RoutineSetup: React.FC<RoutineSetupProps> = ({ day }) => {
               </button>
             </div>
           </div>
-        ))}
-        
-        {/* Notification Settings for each routine item */}
-        {routineItems.map((item) => (
-          <NotificationSettings
-            key={`notification-${item.id}`}
-            routineId={item.id}
-            title={item.title}
-            time={item.time}
-            days={[day]}
-          />
         ))}
       </div>
     </div>
