@@ -91,7 +91,8 @@ export const scheduleNotification = (notification: ScheduledNotification): void 
   // Register with service worker if available
   if ('serviceWorker' in navigator && navigator.serviceWorker.ready) {
     navigator.serviceWorker.ready.then(registration => {
-      registration.sync.register('sync-notifications');
+      // Use type assertion to access sync property
+      (registration as any).sync.register('sync-notifications');
     });
   }
 };
