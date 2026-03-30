@@ -28,6 +28,11 @@ export interface ScheduledNotification {
 }
 
 export const requestNotificationPermission = async (): Promise<NotificationPermission> => {
+  if (typeof window === 'undefined') {
+    // Server-side rendering, return default state
+    return { granted: false, denied: false, default: false };
+  }
+  
   if (!('Notification' in window)) {
     console.warn('This browser does not support notifications');
     return { granted: false, denied: false, default: false };
@@ -42,6 +47,11 @@ export const requestNotificationPermission = async (): Promise<NotificationPermi
 };
 
 export const getNotificationPermission = (): NotificationPermission => {
+  if (typeof window === 'undefined') {
+    // Server-side rendering, return default state
+    return { granted: false, denied: false, default: false };
+  }
+  
   if (!('Notification' in window)) {
     return { granted: false, denied: false, default: false };
   }
@@ -55,6 +65,11 @@ export const getNotificationPermission = (): NotificationPermission => {
 };
 
 export const showNotification = (title: string, body: string, options?: CustomNotificationOptions) => {
+  if (typeof window === 'undefined') {
+    // Server-side rendering, cannot show notifications
+    return null;
+  }
+  
   if (!('Notification' in window) || Notification.permission !== 'granted') {
     return null;
   }
@@ -76,6 +91,11 @@ export const showNotification = (title: string, body: string, options?: CustomNo
 };
 
 export const scheduleNotification = (notification: ScheduledNotification): void => {
+  if (typeof window === 'undefined') {
+    // Server-side rendering, cannot schedule notifications
+    return;
+  }
+  
   // Store in localStorage for service worker to access
   const scheduledNotifications = getScheduledNotifications();
   const existingIndex = scheduledNotifications.findIndex(n => n.id === notification.id);
@@ -170,7 +190,12 @@ export const checkNotificationTime = (): void => {
   });
 };
 
-// Check for notifications every minute
-export const startNotificationChecker = (): NodeJS.Timeout => {
+// Check and trigger notifications
+export const startNotificationChecker = (): NodeJS.Timeout | null => {
+  if (typeof window === 'undefined') {
+    // Server-side rendering, cannot start checker
+    return null;
+  }
+  
   return setInterval(checkNotificationTime, 60000); // Check every minute
 };

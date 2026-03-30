@@ -154,7 +154,7 @@ const DailyRoutineTracker: React.FC<DailyRoutineTrackerProps> = ({ date }) => {
                 >
                   <div className="flex items-center gap-3 mb-3 sm:mb-0">
                     {/* Status icon */}
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${
                       status === "completed"
                         ? "bg-green-500 text-white"
                         : status === "skipped"

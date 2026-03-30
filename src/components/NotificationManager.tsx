@@ -44,7 +44,9 @@ const NotificationManager: React.FC<NotificationManagerProps> = ({ children }) =
     const checkerInterval = startNotificationChecker();
     
     return () => {
-      clearInterval(checkerInterval);
+      if (checkerInterval) {
+        clearInterval(checkerInterval);
+      }
     };
   }, []);
 
