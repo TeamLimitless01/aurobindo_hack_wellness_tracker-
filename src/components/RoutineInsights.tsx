@@ -83,7 +83,7 @@ const RoutineInsights: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">Routine Insights</h2>
           <div className="flex gap-2">
-            {(['week', 'month', 'all'] as const).map((range) => (
+            {(['week', 'month'] as const).map((range) => (
               <button
                 key={range}
                 onClick={() => setTimeRange(range)}
