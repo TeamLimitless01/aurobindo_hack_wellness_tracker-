@@ -1,5 +1,16 @@
 // Notification utilities for routine reminders
 
+export interface CustomNotificationOptions extends NotificationOptions {
+  vibrate?: number[];
+  renotify?: boolean;
+  actions?: NotificationAction[];
+}
+
+export interface NotificationAction {
+  action: string;
+  title: string;
+}
+
 export interface NotificationPermission {
   granted: boolean;
   denied: boolean;
@@ -43,19 +54,25 @@ export const getNotificationPermission = (): NotificationPermission => {
   };
 };
 
-export const showNotification = (title: string, body: string, options?: NotificationOptions) => {
+export const showNotification = (title: string, body: string, options?: CustomNotificationOptions) => {
   if (!('Notification' in window) || Notification.permission !== 'granted') {
     return null;
   }
 
-  return new Notification(title, {
+  const notification = new Notification(title, {
     body,
     icon: '/favicon.ico',
     badge: '/favicon.ico',
-    vibrate: [200, 100, 200],
     requireInteraction: false,
     ...options
   });
+
+  // Vibrate separately if supported and vibrate option is provided
+  if ('vibrate' in navigator && options?.vibrate) {
+    navigator.vibrate(options.vibrate);
+  }
+
+  return notification;
 };
 
 export const scheduleNotification = (notification: ScheduledNotification): void => {

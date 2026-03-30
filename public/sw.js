@@ -56,10 +56,14 @@ self.addEventListener('push', (event) => {
       body: data.body,
       icon: '/favicon.ico',
       badge: '/favicon.ico',
-      vibrate: [200, 100, 200],
       data: data.data,
       actions: data.actions || []
     };
+    
+    // Add vibrate if supported and provided
+    if (data.vibrate) {
+      options.vibrate = data.vibrate;
+    }
     
     event.waitUntil(
       self.registration.showNotification(data.title, options)
