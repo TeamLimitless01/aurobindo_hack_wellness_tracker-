@@ -2,11 +2,16 @@
 
 import { WellnessProvider } from "@/context/WellnessContext";
 import { RoutineProvider } from "@/context/RoutineContext";
+import NotificationManager from "@/components/NotificationManager";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WellnessProvider>
-      <RoutineProvider>{children}</RoutineProvider>
+      <RoutineProvider>
+        <NotificationManager>
+          {children}
+        </NotificationManager>
+      </RoutineProvider>
     </WellnessProvider>
   );
 }

@@ -6,6 +6,7 @@ import RoutineSetup from "@/components/RoutineSetup";
 import MonthlyRoutineTable from "@/components/MonthlyRoutineTable";
 import DailyRoutineTracker from "@/components/DailyRoutineTracker";
 import RoutineInsights from "@/components/RoutineInsights";
+import NotificationPermissionBanner from "@/components/NotificationPermissionBanner";
 import { DayOfWeek } from "@/types";
 
 const RoutinePage: React.FC = () => {
@@ -31,6 +32,9 @@ const RoutinePage: React.FC = () => {
             Plan your weekly routine and track your daily progress throughout the month.
           </p>
         </div>
+
+        {/* Notification Permission Banner */}
+        <NotificationPermissionBanner />
 
         {/* Navigation Tabs */}
         <div className="flex space-x-1 mb-6 sm:mb-8 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg overflow-x-auto">
